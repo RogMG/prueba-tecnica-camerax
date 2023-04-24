@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/edit_text_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/edit_text_apellido_paterno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellido Paterno"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/edit_text_apellido_materno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellido Materno"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/edit_text_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/edit_text_fecha_nacimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de Nacimiento (AAAA-MM-DD)"
+            android:inputType="date"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datos:"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+
+        <EditText
+            android:id="@+id/edit_text_calle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Calle"
+            android:layout_marginBottom="16dp" />
+
+
+        <EditText
+            android:id="@+id/edit_text_numero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número"
+            android:layout_marginBottom="16dp" />
+
+
+        <EditText
+            android:id="@+id/edit_text_colonia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Colonia"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/edit_text_delegacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Delegación/Municipio"
+            android:layout_marginBottom="16dp" />
+
+
+        <EditText
+            android:id="@+id/edit_text_estado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Estado"
+            android:layout_marginBottom="16dp" />
+
+
+        <EditText
+            android:id="@+id/edit_text_cp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CP"
+            android:layout_marginBottom="16dp" />
+
+
+        <Button
+            android:id="@+id/take_photo_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tomar foto"/>
+
+    </LinearLayout>
+
+</ScrollView>

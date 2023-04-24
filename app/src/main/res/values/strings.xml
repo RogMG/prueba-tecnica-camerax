@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">prueba-camerax</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ver_usuarios_string">Ver Usuarios</string>
+    <string name="crear_usuario_string">Crear Usuario</string>
 </resources>
