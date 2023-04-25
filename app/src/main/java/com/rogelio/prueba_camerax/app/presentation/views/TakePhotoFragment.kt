@@ -2,7 +2,10 @@ package com.rogelio.prueba_camerax.app.presentation.views
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +19,9 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.rogelio.prueba_camerax.app.presentation.viewmodels.MainActivityViewModel
 import com.rogelio.prueba_camerax.databinding.FragmentTakePhotoBinding
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -47,6 +50,7 @@ class TakePhotoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setObservers()
         previewView = binding.fragmentPreviewView
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -82,7 +86,7 @@ class TakePhotoFragment : Fragment() {
         val imageCapture = imageCapture ?: return
         val photoFile = File(
             outputDirectory,
-            SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg",
+            SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".png",
         )
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
         imageCapture.takePicture(
@@ -94,17 +98,35 @@ class TakePhotoFragment : Fragment() {
                 }
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     Log.e("", "SUCCESS ${output.savedUri}")
-                    activity?.runOnUiThread {
-                        alertNotification()
-                    } }
+                    fragmentViewModel.saveImageInData(encodeImageToBase64(photoFile))
+                }
             },
         )
     }
 
-    private fun alertNotification() {
+    fun setObservers() {
+        fragmentViewModel.userCreatedResponse.observe(viewLifecycleOwner) {
+            alertNotification("Registrado Correctamente", it)
+        }
+        fragmentViewModel.exception.observe(viewLifecycleOwner) {
+            alertNotification("Registro fallido :(", "Intentalo mas tarde")
+            Log.e("THEMOSTLOCOCHON", it.toString())
+        }
+    }
+
+    private fun encodeImageToBase64(photoFile: File): String {
+        val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
+        val resizedBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false)
+        val outputStream = ByteArrayOutputStream()
+        resizedBitmap.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
+        val byteArray = outputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
+
+    private fun alertNotification(title: String, message: String) {
         val alert = AlertDialog.Builder(requireContext())
-            .setTitle("Registrado correctamente")
-            .setMessage("Te devolveremos al menu principal")
+            .setTitle(title)
+            .setMessage(message)
             .setPositiveButton(
                 "OK",
                 DialogInterface.OnClickListener { dialog, which ->

@@ -1,6 +1,5 @@
 package com.rogelio.prueba_camerax.app.util
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.util.Log
@@ -18,6 +17,13 @@ class RecyclerViewUsers(val itemClicked: RecyclerViewInterface) : RecyclerView.A
 
     fun bindData(data: UsersDTO) {
         usersData.Users.addAll(data.Users)
+        notifyDataSetChanged()
+    }
+
+    fun searchName(data: String) {
+        val filteredElements = usersData.Users.filter { it.nombre?.contains(data) ?: false }.toMutableList()
+        usersData.Users.clear()
+        usersData.Users.addAll(filteredElements)
         notifyDataSetChanged()
     }
 
@@ -52,12 +58,10 @@ class RecyclerViewUsers(val itemClicked: RecyclerViewInterface) : RecyclerView.A
         val userImage = binding.seeUserImageView
         val showInfoButton = binding.seeInformationButton
 
-
         init {
             showInfoButton.setOnClickListener {
                 itemClicked.onItemClickedShow(usersData.Users[adapterPosition])
             }
-
         }
     }
 }

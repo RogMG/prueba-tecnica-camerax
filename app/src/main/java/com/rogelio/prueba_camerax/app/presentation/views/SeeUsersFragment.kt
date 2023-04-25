@@ -32,6 +32,9 @@ class SeeUsersFragment : Fragment(), RecyclerViewInterface {
         adapter = RecyclerViewUsers(this)
         binding.usersRecyclerView.adapter = adapter
         binding.usersRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.seeSearchNameButton.setOnClickListener {
+            lookForInformation(binding.seeNameSearchEditText.text.toString())
+        }
         fragmentViewModel.getUsersData()
     }
 
@@ -39,8 +42,10 @@ class SeeUsersFragment : Fragment(), RecyclerViewInterface {
         fragmentViewModel.usersData.observe(viewLifecycleOwner) {
             adapter.bindData(it)
         }
-        fragmentViewModel.exception.observe(viewLifecycleOwner) {
-        }
+    }
+
+    fun lookForInformation(data: String) {
+        adapter.searchName(data)
     }
 
     override fun onDestroyView() {
@@ -52,7 +57,6 @@ class SeeUsersFragment : Fragment(), RecyclerViewInterface {
         data.datos?.let {
             val dialogFragment = DialogFragmentInfoUsers.newInstance(it)
             dialogFragment.show(parentFragmentManager, "DIALOG_FRAGMENT_INFO")
-
         }
     }
 }
