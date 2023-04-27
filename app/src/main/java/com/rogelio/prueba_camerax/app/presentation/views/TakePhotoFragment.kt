@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Environment
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
@@ -97,8 +98,8 @@ class TakePhotoFragment : Fragment() {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    Log.e("", "SUCCESS ${output.savedUri}")
-                    fragmentViewModel.saveImageInData(encodeImageToBase64(photoFile))
+                    Log.e("", "SUCCESS")
+                    //           fragmentViewModel.saveImageInData(encodeImageToBase64(photoFile))
                 }
             },
         )
@@ -116,9 +117,11 @@ class TakePhotoFragment : Fragment() {
 
     private fun encodeImageToBase64(photoFile: File): String {
         val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
-        val resizedBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false)
+        val resizedBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
         val outputStream = ByteArrayOutputStream()
-        resizedBitmap.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
+        resizedBitmap.compress(Bitmap.CompressFormat.PNG, 50, outputStream)
+        // Checked the size of the image, now is 300x300px
+        Log.e("IMAGE SIZE 300px 300px", "${ resizedBitmap.width } ${ resizedBitmap.height }")
         val byteArray = outputStream.toByteArray()
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
@@ -137,7 +140,8 @@ class TakePhotoFragment : Fragment() {
     }
 
     private fun getOutputDirectory(): File {
-        val mediaDir = requireContext().externalMediaDirs.firstOrNull()?.let {
+        // Now it saves directly into internal storage */Documents/Prueba-tecnica-X !
+        val mediaDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)?.let {
             File(it, "Prueba_tecnica_X").apply { mkdirs() }
         }
         return if (mediaDir != null && mediaDir.exists()) {
