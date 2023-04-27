@@ -99,7 +99,7 @@ class TakePhotoFragment : Fragment() {
                 }
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     Log.e("", "SUCCESS")
-                    //           fragmentViewModel.saveImageInData(encodeImageToBase64(photoFile))
+                    fragmentViewModel.saveImageInData(encodeImageToBase64(photoFile))
                 }
             },
         )
