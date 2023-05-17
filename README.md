@@ -13,7 +13,7 @@ Agregando al header el siguiente token:
 headers: { 
 'Content-Type': 'application/json', 
 'Host: api.devdicio.net', 
-'xc-token': "J38b4XQNLErVatKIh4oP1jw9e_wYWkS86Y04TMNP" 
+'xc-token': "" 
 } 
 Se debe construir un formulario para un registro de usuarios que tenga las siguientes características Esta 
 Aplicación, tendrá 2 secciones: 
